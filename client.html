@@ -225,9 +225,11 @@ function clicked() {
     switch (team) {
       case 'red':
         data.redPoints++;
+        data.bluePoints--;
         break;
       case 'blue':
         data.bluePoints++;
+        data.redPoints--;
         break;
     }
 
