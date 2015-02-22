@@ -74,7 +74,7 @@ html, body, #container {
   width: 50%;
   height: 100%;
   background-color: #ff5959;
-  float: left;
+  float: right;
 
   -webkit-transition: all 0.25s ease-out;
   -moz-transition: all 0.25s ease-out;
@@ -86,21 +86,31 @@ html, body, #container {
   width: 50%;
   height: 100%;
   background-color: #9ae8fe;
-  float: right;
+  float: left;
 
   -webkit-transition: all 0.25s ease-out;
   -moz-transition: all 0.25s ease-out;
   -o-transition: all 0.25s ease-out;
   -ms-transition: all 0.25s ease-out;
 }
+
+.rope {
+  width: 100%;
+  height: 80px;
+
+  position: absolute;
+  bottom: 195px;
+
+  background: url(/images/rope.png) repeat-x;
+  background-size: 182px 80px;
+}
     </style>
   </head>
   <body>
     <div id="container">
-      <div id="red">
-      </div>
-      <div id="blue">
-      </div>
+      <div id="blue"></div>
+      <div id="red"></div>
+      <div class="rope"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.2.0/firebase.js"></script>
