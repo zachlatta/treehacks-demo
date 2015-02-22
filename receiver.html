@@ -132,8 +132,8 @@ fb.on("value", function (snapshot) {
 
   var redPercent = calculatePercentage(points.redPoints, points.redPoints + points.bluePoints) + "%";
   var bluePercent = calculatePercentage(points.bluePoints, points.bluePoints + points.redPoints) + "%";
-  $("#bluePercentCount").text(bluePercent);
-  $("#redPercentCount").text(redPercent);
+  $("#bluePercentCount").text(Math.floor(bluePercent));
+  $("#redPercentCount").text(Math.floor(redPercent));
   $("#red").width(redPercent);
   $("#blue").width(bluePercent);
 });
