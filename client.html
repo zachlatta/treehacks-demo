@@ -198,17 +198,17 @@ var counter = 0;
 
 FastClick.attach(document.body);
 
-if (Math.random() * 2 > 1) {
-  team = 'red';
-  $('#container').css('background-color', '#ff5959');
-} else {
-  team = 'blue';
-  $('#container').css('background-color', '#9ae8fe');
-}
+reset();
 
-fb.on("value", function (snapshot) {
-  var points = snapshot.val();
-});
+function reset() {
+  if (Math.random() * 2 > 1) {
+    team = 'red';
+    $('#container').css('background-color', '#ff5959');
+  } else {
+    team = 'blue';
+    $('#container').css('background-color', '#9ae8fe');
+  }
+}
 
 function clicked() {
   $('.flashContainer')
