@@ -122,8 +122,10 @@ var blue = $("#blue");
 fb.on("value", function (snapshot) {
   var points = snapshot.val();
 
-  $("#red").width(calculatePercentage(points.redPoints, points.redPoints + points.bluePoints) + '%');
-  $("#blue").width(calculatePercentage(points.bluePoints, points.bluePoints + points.redPoints) + '%');
+  var redPercent = calculatePercentage(points.redPoints, points.redPoints + points.bluePoints);
+  var bluePercent = calculatePercentage(points.bluePoints, points.bluePoints + points.redPoints)
+  $("#red").width(redPercent + '%');
+  $("#blue").width(bluePercent + '%');
 });
 
 function calculatePercentage(first, second) {
