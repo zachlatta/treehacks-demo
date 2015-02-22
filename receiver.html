@@ -101,16 +101,26 @@ html, body, #container {
   position: absolute;
   bottom: 195px;
 
-  background: url(/images/rope.png) repeat-x;
+  background: url(images/rope.png) repeat-x;
   background-size: 182px 80px;
 }
 
 #bluePercentCount{
+  font-size: 6em;
   color:#61B7CF;
+  font-family: 'barutablack';
+  position: absolute;
+  left: 20px;
+  bottom: 10px;
 }
 
 #redPercentCount{
+  font-size: 6em;
   color:#A03737;
+  font-family: 'barutablack';
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
 }
     </style>
   </head>
@@ -130,12 +140,12 @@ var blue = $("#blue");
 fb.on("value", function (snapshot) {
   var points = snapshot.val();
 
-  var redPercent = calculatePercentage(points.redPoints, points.redPoints + points.bluePoints) + "%";
-  var bluePercent = calculatePercentage(points.bluePoints, points.bluePoints + points.redPoints) + "%";
-  $("#bluePercentCount").text(Math.floor(bluePercent));
-  $("#redPercentCount").text(Math.floor(redPercent));
-  $("#red").width(redPercent);
-  $("#blue").width(bluePercent);
+  var redPercent = calculatePercentage(points.redPoints, points.redPoints + points.bluePoints);
+  var bluePercent = calculatePercentage(points.bluePoints, points.bluePoints + points.redPoints);
+  $("#bluePercentCount").text(Math.floor(bluePercent)+ "%");
+  $("#redPercentCount").text(Math.floor(redPercent)+ "%");
+  $("#red").width(redPercent + "%");
+  $("#blue").width(bluePercent + "%");
 });
 
 function calculatePercentage(first, second) {
