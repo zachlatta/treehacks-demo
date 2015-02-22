@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Do The Thing</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/**************************/
+
+html, body, #container {
+  width: 100%;
+  height: 100%;
+}
+
+#container {
+  position: relative;
+}
+
+.palm {
+  margin-left: -63.5px;
+
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+
+  background: url(/images/palm.png);
+  background-size: 127px 199px;
+
+  width: 127px;
+  height: 183px;
+}
+
+.rope {
+  width: 100%;
+  height: 40px;
+
+  position: absolute;
+  bottom: 115px;
+
+  background: url(/images/rope.png) repeat-x;
+  background-size: 91px 40px;
+}
+
+.fingers {
+  margin-left: -63.5px;
+
+  position: absolute;
+  left: 50%;
+  bottom: 103px;
+
+  background: url(/images/fingers.png);
+  background-size: 128px 102px;
+
+  width: 128px;
+  height: 102px;
+}
+
+.count {
+  width: 100%;
+  height: 64px;
+
+  font-family: 'barutablack';
+  font-size: 64px;
+  text-align: center;
+
+  position: absolute;
+  top: 21%;
+  left: 0;
+  right: 0;
+
+  color: #fff;
+}
+
+.flashContainer {
+  opacity: 0;
+
+  background: white;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.tapCommand {
+  width: 100%;
+  height: 32px;
+
+  font-family: 'barutablack';
+  font-size: 32px;
+  text-align: center;
+
+  position: absolute;
+  top: 40%; 
+  left: 0;
+  right: 0;
+
+  color: #fff;
+}
+
+.pulsate {
+  -webkit-animation: flash linear 1s infinite;
+  animation: flash linear 1s infinite;
+}
+@-webkit-keyframes flash {
+  0% { opacity: 1; }
+  50% { opacity: .1; }
+  100% { opacity: 1; }
+}
+@keyframes flash {
+  0% { opacity: 1; }
+  50% { opacity: .1; }
+  100% { opacity: 1; }
+}
+    </style>
+  </head>
+  <body>
+    <div id="container" onclick="clicked()">
+      <div class="palm"></div>
+      <div class="rope"></div>
+      <div class="fingers"></div>
+      <div class="tapCommand pulsate">TAP!</div>
+
+      <div class="count">64</div>
+      <div class="flashContainer"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.0/firebase.js"></script>
+    <script type="text/javascript">
+var fb = new Firebase("https://dothething.firebaseio.com/");
+var team;
+
+FastClick.attach(document.body);
+
+if (Math.random() * 2 > 1) {
+  team = 'red';
+  $('#container').css('background-color', '#ff5959');
+} else {
+  team = 'blue';
+  $('#container').css('background-color', '#9ae8fe');
+}
+
+fb.on("value", function (snapshot) {
+  var points = snapshot.val();
+});
+
+function clicked() {
+  $('.flashContainer')
+    .velocity('stop')
+    .velocity({
+      opacity: [0, 0.5]
+    });
+
+  fb.once("value", function (snapshot) {
+    var data = snapshot.val();
+    console.log(data);
+    switch (team) {
+      case 'red':
+        data.redPoints++;
+        break;
+      case 'blue':
+        data.bluePoints++;
+        break;
+    }
+
+    fb.set(data);
+  });
+}
+
+function calculatePercentage(first, second) {
+  if (first == 0 && second == 0) {
+    return 50;
+  }
+
+  return (first / second) * 100;
+}
+    </script>
+  </body>
+</html>
