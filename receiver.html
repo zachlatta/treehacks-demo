@@ -70,11 +70,11 @@ html, body, #container {
   height: 100%;
 }
 
-#red {
+#blue {
   width: 50%;
   height: 100%;
-  background-color: #ff5959;
-  float: right;
+  background-color: #9ae8fe;
+  float: left;
 
   -webkit-transition: all 0.25s ease-out;
   -moz-transition: all 0.25s ease-out;
@@ -82,11 +82,11 @@ html, body, #container {
   -ms-transition: all 0.25s ease-out;
 }
 
-#blue {
+#red {
   width: 50%;
   height: 100%;
-  background-color: #9ae8fe;
-  float: left;
+  background-color: #ff5959;
+  float: right;
 
   -webkit-transition: all 0.25s ease-out;
   -moz-transition: all 0.25s ease-out;
@@ -104,12 +104,20 @@ html, body, #container {
   background: url(/images/rope.png) repeat-x;
   background-size: 182px 80px;
 }
+
+#bluePercentCount{
+  color:#61B7CF;
+}
+
+#redPercentCount{
+  color:#A03737;
+}
     </style>
   </head>
   <body>
     <div id="container">
-      <div id="blue"></div>
-      <div id="red"></div>
+      <div id="blue"><h2 id="bluePercentCount"></h2></div>
+      <div id="red"><h2 id="redPercentCount"></h2></div>
       <div class="rope"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -122,10 +130,12 @@ var blue = $("#blue");
 fb.on("value", function (snapshot) {
   var points = snapshot.val();
 
-  var redPercent = calculatePercentage(points.redPoints, points.redPoints + points.bluePoints);
-  var bluePercent = calculatePercentage(points.bluePoints, points.bluePoints + points.redPoints)
-  $("#red").width(redPercent + '%');
-  $("#blue").width(bluePercent + '%');
+  var redPercent = calculatePercentage(points.redPoints, points.redPoints + points.bluePoints) + "%";
+  var bluePercent = calculatePercentage(points.bluePoints, points.bluePoints + points.redPoints) + "%";
+  $("#bluePercentCount").text(bluePercent);
+  $("#redPercentCount").text(redPercent);
+  $("#red").width(redPercent);
+  $("#blue").width(bluePercent);
 });
 
 function calculatePercentage(first, second) {
